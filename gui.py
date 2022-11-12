@@ -1,3 +1,5 @@
+import sqlite3
+
 from anzeige.frm_main import Ui_startfenster
 from PySide6 import QtSql
 from PySide6.QtWidgets import QApplication, QMainWindow
@@ -10,29 +12,30 @@ class Start_Fenster(QMainWindow, Ui_startfenster):
         self.setupUi(self)
         self.mod_todo = QtSql.QSqlRelationalTableModel()
         self.mod_todo.setTable("todo_liste")
-        self.pb_todo_eintragen.clicked.connect(self.todo_eintragen())
+        self.pb_todo_eintragen.clicked.connect(self.todo_eintragen)
         self.todo_aktualisieren()
+        self.tv_todo.setColumnWidth(0, 20)
+        self.tv_todo.setColumnWidth(1, 80)
+        self.tv_todo.setColumnWidth(2, 640)
+        self.tv_todo.setColumnWidth(3, 80)
+        self.tv_todo.setColumnWidth(4, 80)
 
 
     def todo_eintragen(self):
-        model = self.mod_todo
-        # query = QtSql.QSqlQuery()
-        # test = """ insert into todo_liste set
-        # Datum = 20.11.2022,
-        # [zu erledigen] = testes aus programm,
-        # bis_Datum = 21.11.2022"""
-        # query.exec(test)
-        # model.select()
-        # self.tv_todo.setModel(model)
+        text = self.input_text_todo.text()
+        conn = sqlite3.connect("db/database.db")
+        cursor = conn.cursor()
+        sql = "INSERT INTO todo_liste (Datum, [zu erledigen]) VALUES ('16.11.2022', ?)"
+        cursor.execute(sql, (text,))
+        conn.commit()
+        conn.close()
+        self.input_text_todo.setText("")
+        self.todo_aktualisieren()
+
 
 
     def todo_aktualisieren(self):
         model = self.mod_todo
-        # query = QtSql.QSqlQuery()
-        # abfrage = """update todo_liste set
-        # xxx = YYYY,
-        # XXX = YYYY
-        # query.exec(abfrage)
         model.select()
         self.tv_todo.setModel(model)
 

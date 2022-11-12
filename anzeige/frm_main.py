@@ -38,7 +38,7 @@ class Ui_startfenster(object):
         self.date_end_todo.setLayoutDirection(Qt.LeftToRight)
         self.date_end_todo.setAlignment(Qt.AlignCenter)
         self.date_end_todo.setButtonSymbols(QAbstractSpinBox.UpDownArrows)
-        self.date_end_todo.setDateTime(QDateTime(QDate(2022, 10, 13), QTime(22, 0, 0)))
+        self.date_end_todo.setDateTime(QDateTime(QDate(2022, 10, 13), QTime(18, 0, 0)))
         self.date_end_todo.setMinimumDate(QDate(2022, 10, 11))
         self.date_end_todo.setCalendarPopup(True)
         self.cb_dringlichkeit = QComboBox(self.centralwidget)
